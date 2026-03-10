@@ -1,5 +1,5 @@
 <?php
-function isAdult($age):string{
+function isAdult($age){
     if($age >= 18){
         return "Access Granted";
     }else{
