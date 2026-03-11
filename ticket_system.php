@@ -1,6 +1,6 @@
 <?php
 
-$age = 10;
+$age = 30;
 $price = 0;
 
 if ($age < 12) {
