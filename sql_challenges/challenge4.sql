@@ -28,46 +28,68 @@
 -- ('Donated Book 1', 'Unknown Author', 2005, 'Available', NULL),
 -- ('Introduction to Algorithms', 'Thomas H. Cormen', 2009, 'Available', 199.95);
 
---! Challenge 3 HERE
 
-SELECT tilte, author, price FROM library_books ;
 
---For filter the price we can use this queries
-SELECT * FROM library_books WHERE price >= 100 AND price <= 300;
-SELECT * FROM library_books WHERE price BETWEEN 100 AND 300;
+-- SELECT tilte, author, price FROM library_books ;
 
---To find  all books published after the year 2020
-SELECT * 
-FROM library_books 
-WHERE published_year > 2020;
+-- --For filter the price we can use this queries
+-- SELECT * FROM library_books WHERE price >= 100 AND price <= 300;
+-- SELECT * FROM library_books WHERE price BETWEEN 100 AND 300;
 
--- To find all books that have the word "PHP" anywhere in their title.
-SELECT title 
-FROM library_books 
-WHERE title LIKE '%PHP%';
+-- --To find  all books published after the year 2020
+-- SELECT * 
+-- FROM library_books 
+-- WHERE published_year > 2020;
 
---? %PHP Try to find the title that have php from the first of the title 
---? PHP% Try to find the title that have php from the last of the title
---? %PHP% Try to find the title that have php from anywhere of the title 
---? BTW in this database 
+-- -- To find all books that have the word "PHP" anywhere in their title.
+-- SELECT title 
+-- FROM library_books 
+-- WHERE title LIKE '%PHP%';
 
--- To list all books that are NOT currently 'Lost' and sorted by the most recent published_year use this query.
-SELECT *
+-- --? %PHP Try to find the title that have php from the first of the title 
+-- --? PHP% Try to find the title that have php from the last of the title
+-- --? %PHP% Try to find the title that have php from anywhere of the title 
+-- --? BTW in this database 
+
+-- -- To list all books that are NOT currently 'Lost' and sorted by the most recent published_year use this query.
+-- SELECT *
+-- FROM library_books
+-- WHERE status != 'Lost'
+-- ORDER BY published_year DESC;
+-- --? DESC it's a short case of DESCENDING it sort thing from big to small;
+-- --? ASC it's a short case of ASCENDING it sort thing from small to big;
+
+-- -- To list all unique (DISTINCT) authors in the library use this query.
+-- SELECT DISTINCT author
+-- FROM library_books;
+
+-- --? This one is not mentioned in the challenge, but I was wondering how we can see all books per author, the key is to GROUP BY author.
+-- SELECT *
+-- FROM library_books
+-- GROUP BY author;
+
+-- -- To show the book titles in UPPERCASE and the price rounded to the nearest whole number use this query.
+-- SELECT UPPER(title), ROUND(price)
+-- FROM library_books;
+
+
+--! Challenge 4 HERE
+
+
+--To create table use this query.
+Create table categories(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+-- TO ADD AND ASSIGN THE category_id with categories(id) use this query;
+ALTER TABLE library_books 
+ADD COLUMN category_id INT AFTER id,
+FOREIGN KEY (category_id) REFERENCES categories(id);
+
+-- TO JOIND the library_book with categoies side by side use this query.
+SELECT 
+    library_books.title AS Book_Title, 
+    categories.name AS Category_Name
 FROM library_books
-WHERE status != 'Lost'
-ORDER BY published_year DESC;
---? DESC it's a short case of DESCENDING it sort thing from big to small;
---? ASC it's a short case of ASCENDING it sort thing from small to big;
-
--- To list all unique (DISTINCT) authors in the library use this query.
-SELECT DISTINCT author
-FROM library_books;
-
---? This one is not mentioned in the challenge, but I was wondering how we can see all books per author, the key is to GROUP BY author.
-SELECT *
-FROM library_books
-GROUP BY author;
-
--- To show the book titles in UPPERCASE and the price rounded to the nearest whole number use this query.
-SELECT UPPER(title), ROUND(price)
-FROM library_books;
+INNER JOIN categories 
