@@ -93,3 +93,4 @@ SELECT
     categories.name AS Category_Name
 FROM library_books
 INNER JOIN categories 
+ON library_books.category_id = categories.id;
